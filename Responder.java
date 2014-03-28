@@ -11,6 +11,7 @@ import java.util.HashMap;
 public class Responder
 {
     private Random rnd;
+    private ArrayList<String> respuestas;
     private HashMap<String,String> responses;
     
     /**
@@ -19,12 +20,19 @@ public class Responder
     public Responder()
     {
         rnd = new Random();
-        responses = new HashMap(5);
+        responses = new HashMap<String,String>();
+        respuestas = new ArrayList<>();
         responses.put("software", "Checks for software updates");
         responses.put("parameters", "The software parameters are right?");
         responses.put("requirements", "Are you check the requirements to run the software?");
         responses.put("running", "Check that you have no other software running");
         responses.put("storage", "Check if your system has enougth storage to run the software");
+        
+        respuestas.add("Checks for software updates");
+        respuestas.add("The software parameters are right?");
+        respuestas.add("Are you check the requirements to run the software?");
+        respuestas.add("Check that you have no other software running");
+        respuestas.add("Check if your system has enougth storage to run the software");
     }
 
     /**
@@ -38,8 +46,7 @@ public class Responder
         {
             response = responses.get(word);
         }else{
-            int indexRandom = rnd.nextInt(5);
-            return responses.get(indexRandom);
+            response = respuestas.get(rnd.nextInt(respuestas.size()));
         }
         return response;
     }
