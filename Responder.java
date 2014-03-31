@@ -13,7 +13,7 @@ public class Responder
 {
     private Random rnd;
     private ArrayList<String> respuestas;
-    private HashMap<String,String> responses;
+    private HashMap<HashSet,String> responses;
     
     /**
      * Construct a Responder - nothing to do
@@ -21,13 +21,33 @@ public class Responder
     public Responder()
     {
         rnd = new Random();
-        responses = new HashMap<String,String>();
+        responses = new HashMap<HashSet,String>();
         respuestas = new ArrayList<>();
-        responses.put("software", "Checks for software updates");
-        responses.put("parameters", "The software parameters are right?");
-        responses.put("requirements", "Are you check the requirements to run the software?");
-        responses.put("running", "Check that you have no other software running");
-        responses.put("storage", "Check if your system has enougth storage to run the software");
+        HashSet<String> software = new HashSet<>();
+        software.add("software");
+        software.add("updates");
+        HashSet<String> parameters = new HashSet<>();
+        parameters.add("parameters");
+        parameters.add("rigth");
+        HashSet<String> requirements = new HashSet<>();
+        requirements.add("requirements");
+        requirements.add("software");
+        HashSet<String> running = new HashSet<>();
+        running.add("other");
+        running.add("software");
+        running.add("running");
+        HashSet<String> storage = new HashSet<>();
+        storage.add("enougth");
+        storage.add("storage");
+        HashSet<String> free = new HashSet<>();
+        free.add("free");
+        free.add("app");
+        responses.put(software, "Checks for software updates");
+        responses.put(parameters, "The software parameters are right?");
+        responses.put(requirements, "Are you check the requirements to run the software?");
+        responses.put(running, "Check that you have no other software running");
+        responses.put(storage, "Check if your system has enougth storage to run the software");
+        responses.put(free, "You can only enjoy the basic features");
         
         respuestas.add("Checks for software updates");
         respuestas.add("The software parameters are right?");
@@ -43,12 +63,10 @@ public class Responder
     public String generateResponse(HashSet<String> word)
     {
         String response = null;
-        for(String element : word)
+        
+        if(responses.containsKey(word))
         {
-            if(responses.containsKey(element))
-            {
-                response = responses.get(element);
-            }
+            response = responses.get(word);
         }
         if(response == null){
             response = respuestas.get(rnd.nextInt(respuestas.size()));
