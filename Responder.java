@@ -14,6 +14,7 @@ public class Responder
     private Random rnd;
     private ArrayList<String> respuestas;
     private HashMap<HashSet,String> responses;
+    private ArrayList<String> copiaRespuestas;
     
     /**
      * Construct a Responder - nothing to do
@@ -54,6 +55,9 @@ public class Responder
         respuestas.add("Are you check the requirements to run the software?");
         respuestas.add("Check that you have no other software running");
         respuestas.add("Check if your system has enougth storage to run the software");
+        
+        copiaRespuestas = new ArrayList<>();
+        copiaRespuestas = (ArrayList<String>) respuestas.clone();
     }
 
     /**
@@ -63,14 +67,19 @@ public class Responder
     public String generateResponse(HashSet<String> word)
     {
         String response = null;
-        
+
         if(responses.containsKey(word))
         {
             response = responses.get(word);
         }
-        if(response == null){
-            response = respuestas.get(rnd.nextInt(respuestas.size()));
-        }  
+        if(copiaRespuestas.size() == 0)
+        {
+            response = "I don't understand the sentence"; 
+        }else if(response == null){
+            int respuestaAleatoria = rnd.nextInt(copiaRespuestas.size());
+            response = copiaRespuestas.get(respuestaAleatoria);
+            copiaRespuestas.remove(respuestaAleatoria);
+        }
         
         return response;
     }
